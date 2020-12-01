@@ -85,7 +85,7 @@ def postprocess(det_output, w, h, batch_idx=0, interpolation_mode='bilinear',
                         if cfg.rescore_bbox:
                             scores = scores * maskiou_p
                         else:
-                            scores = np.concatenate(
+                            scores = torch.cat(
                                 (scores, scores * maskiou_p))
 
         # Scale masks up to the full image
