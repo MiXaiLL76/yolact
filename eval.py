@@ -979,8 +979,7 @@ def evaluate(net:Yolact, dataset, train_mode=False):
                     % (repr(progress_bar), it+1, dataset_size, progress, fps), end='')
 
 
-
-        if not args.display and not args.benchmark:
+        if args.output_coco_json or (not args.display and not args.benchmark):
             print()
             if args.output_coco_json:
                 print('Dumping detections...')
