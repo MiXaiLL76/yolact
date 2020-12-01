@@ -185,6 +185,7 @@ def prep_display(dets_out, img, h, w, undo_transform=True, class_color=False, ma
             return color
     if args.noimgoutput:
         img_gpu = img_gpu * 0
+        mask_alpha = 1
 
     # First, draw the masks on the GPU where we can do it really fast
     # Beware: very fast but possibly unintelligible mask-drawing code ahead
