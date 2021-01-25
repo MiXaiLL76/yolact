@@ -30,8 +30,8 @@ def str2bool(v):
 
 parser = argparse.ArgumentParser(
     description='Yolact Training Script')
-parser.add_argument('--batch_size', default=8, type=int,
-                    help='Batch size for training')
+parser.add_argument('--batch_size', default=5, type=int,
+                    help='Batch size for training. For the 550px models, 1 batch takes up around 1.5 gigs of VRAM')
 parser.add_argument('--resume', default=None, type=str,
                     help='Checkpoint state_dict file to resume training from. If this is "interrupt"'\
                          ', the model will resume training from the interrupt file.')
@@ -40,7 +40,7 @@ parser.add_argument('--start_iter', default=-1, type=int,
                          'determined from the file name.')
 parser.add_argument('--num_workers', default=4, type=int,
                     help='Number of workers used in dataloading')
-parser.add_argument('--cuda', default=True, type=str2bool,
+parser.add_argument('--cuda', default=False, type=str2bool,
                     help='Use CUDA to train model')
 parser.add_argument('--lr', '--learning_rate', default=None, type=float,
                     help='Initial learning rate. Leave as None to read this from the config.')
@@ -501,5 +501,4 @@ def setup_eval():
     eval_script.parse_args(['--no_bar', '--max_images='+str(args.validation_size)])
 
 if __name__ == '__main__':
-    # train()
-    print('Ok')
+    train()
