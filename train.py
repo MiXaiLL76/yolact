@@ -63,7 +63,7 @@ parser.add_argument('--save_interval', default=10000, type=int,
 parser.add_argument('--validation_size', default=5000, type=int,
                     help='The number of images to use for validation.')
 parser.add_argument('--validation_epoch', default=2, type=int,
-                    help='Output validation information every n iterations. If -1, do no validation.')
+                    help='Output validation information every n iterations. If -1, do no validation.')            
 parser.add_argument('--keep_latest', dest='keep_latest', action='store_true',
                     help='Only keep the latest checkpoint instead of each one.')
 parser.add_argument('--keep_latest_interval', default=100000, type=int,
@@ -369,6 +369,8 @@ def train():
                         if args.keep_latest_interval <= 0 or iteration % args.keep_latest_interval != args.save_interval:
                             print('Deleting old save...')
                             os.remove(latest)
+                    
+                    compute_validation_map(epoch, iteration, yolact_net, val_dataset, log if args.log else None)
             
             # This is done per epoch
             if args.validation_epoch > 0:

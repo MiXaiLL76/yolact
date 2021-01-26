@@ -62,6 +62,10 @@ if __name__ == '__main__':
     #             "segmentation" : [ann['segmentation']],
     #             "category_id" : 1
             })
+            
+            if len(ann['segmentation']) != 1:
+                ann['segmentation'] = [ann['segmentation']]
+            
             all_coco['annotations'].append(ann)
             
         for cat in coco['categories']:
