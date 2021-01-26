@@ -43,7 +43,7 @@ RUN python3 -m pip install --no-cache-dir jupyterlab
 RUN python3 -m pip install --no-cache-dir jedi==0.17.2 idna==2.9 
 
 # Настройка файла запуска jupyterlab
-RUN sudo mkdir -m777 -p /app
+RUN mkdir -m777 -p /app
 ENV JUP_START "/usr/local/bin/jupyter-lab-starter"
 COPY scripts/jupyter-lab-starter ${JUP_START}
 
