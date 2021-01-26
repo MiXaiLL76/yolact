@@ -33,6 +33,9 @@ def get_files(path, extensions):
 if __name__ == '__main__':
     categories = []
     for file in tqdm(get_files(args.train, "*.json")):
+        with open(file, encoding='utf-8') as io:
+            coco = json.loads(io.read())
+            
         for cat in coco['categories']:
             categories.append(cat)
     
