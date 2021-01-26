@@ -36,8 +36,6 @@ WORKDIR /workspace
 
 ENTRYPOINT ["bash"]
 
-
-
 # Устанавливаем jupyterlab
 RUN python3 -m pip install --no-cache-dir jupyterlab 
 
@@ -52,3 +50,5 @@ COPY scripts/jupyter-lab-starter ${JUP_START}
 ENV PORT 9999
 # Открытие порта для jupyter
 EXPOSE ${PORT}
+
+ENTRYPOINT ${JUP_START}
