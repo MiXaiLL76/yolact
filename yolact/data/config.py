@@ -75,6 +75,17 @@ class Config(object):
         for k, v in vars(self).items():
             print(k, ' = ', v)
 
+    def __iter__(self):
+        for k, v in vars(self).items():
+            if type(v) is type(self):
+                v = dict(v)
+            yield k, v
+    
+    def __repr__(self):
+        return json.dumps(dict(self))
+    
+    def __str__(self):
+        return self.__repr__()
 
 
 
@@ -638,9 +649,9 @@ def load_from_file(config_file_path:str):
     global cfg
 
     with open(coco_base_config, encoding='utf-8') as io:
-        new_cfg = json.loads(io.read())
+        new_cfg = cfg.copy(json.loads(io.read()))
 
-    cfg.update(new_cfg)
+    cfg = new_cfg
 
 def set_cfg(config_name:str):
     """ Sets the active config. Works even if cfg is already imported! """

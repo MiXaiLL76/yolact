@@ -35,7 +35,7 @@ if __name__ == '__main__':
     for file in tqdm(get_files(args.train, "*.json")):
         with open(file, encoding='utf-8') as io:
             coco = json.loads(io.read())
-            
+
         for cat in coco['categories']:
             categories.append(cat)
     
@@ -85,3 +85,6 @@ if __name__ == '__main__':
         # The maximum number of detections for evaluation
         'max_num_detections': 100,
     }
+
+    with open(args.out_cfg, 'w', encoding='utf-8') as io:
+        io.write(json.dumps(out_cfg))
