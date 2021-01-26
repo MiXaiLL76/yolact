@@ -78,4 +78,7 @@ if __name__ == '__main__':
         # Training params
         'lr_steps': (280000, 600000, 700000, 750000),
         'max_iter': 2000,
+
+        # The maximum number of detections for evaluation
+        'max_num_detections': 100,
     }
