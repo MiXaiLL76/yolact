@@ -6,10 +6,9 @@ from yolact.layers.box_utils import jaccard, center_size, mask_iou
 from yolact.utils import timer
 from yolact.utils.functions import SavePath
 from yolact.layers.output_utils import postprocess, undo_image_transformation
-import pycocotools
-
 from yolact.data import cfg, set_cfg, set_dataset
 
+import pycocotools
 import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
@@ -77,6 +76,8 @@ def parse_args(argv=None):
                         help='The output file for coco mask results if --coco_results is set.')
     parser.add_argument('--config', default=None,
                         help='The config object to use.')
+    parser.add_argument('--config_file', default=None, type=str,
+                    help='config file to load')
     parser.add_argument('--output_web_json', dest='output_web_json', action='store_true',
                         help='If display is not set, instead of processing IoU values, this dumps detections for usage with the detections viewer web thingy.')
     parser.add_argument('--web_det_path', default='web/dets/', type=str,
@@ -1054,6 +1055,9 @@ if __name__ == '__main__':
 
     if args.config is not None:
         set_cfg(args.config)
+    
+    if args.config_file is not None:
+        load_from_file(args.config_file)
 
     if args.trained_model == 'interrupt':
         args.trained_model = SavePath.get_interrupt('weights/')
