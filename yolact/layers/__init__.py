@@ -1,2 +1,2 @@
-from .functions import *
-from .modules import *
+from yolact.layers.functions import *
+from yolact.layers.modules import *

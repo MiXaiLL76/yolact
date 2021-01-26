@@ -1,5 +1,5 @@
-from .config import *
-from .coco import *
+from yolact.data.config import *
+from yolact.data.coco import *
 
 import torch
 import cv2

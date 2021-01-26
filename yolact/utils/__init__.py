@@ -1,1 +1,1 @@
-from .augmentations import SSDAugmentation
+from yolact.utils.augmentations import SSDAugmentation
