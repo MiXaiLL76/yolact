@@ -38,9 +38,9 @@ parser.add_argument('--resume', default=None, type=str,
 parser.add_argument('--start_iter', default=-1, type=int,
                     help='Resume training at this iter. If this is -1, the iteration will be'\
                          'determined from the file name.')
-parser.add_argument('--num_workers', default=4, type=int,
+parser.add_argument('--num_workers', default=6, type=int,
                     help='Number of workers used in dataloading')
-parser.add_argument('--cuda', default=False, type=str2bool,
+parser.add_argument('--cuda', default=True, type=str2bool,
                     help='Use CUDA to train model')
 parser.add_argument('--lr', '--learning_rate', default=None, type=float,
                     help='Initial learning rate. Leave as None to read this from the config.')
@@ -56,6 +56,8 @@ parser.add_argument('--log_folder', default='logs/',
                     help='Directory for saving logs.')
 parser.add_argument('--config', default=None,
                     help='The config object to use.')
+parser.add_argument('--config_file', default=None, type=str,
+                    help='config file to load')
 parser.add_argument('--save_interval', default=10000, type=int,
                     help='The number of iterations between saving the model.')
 parser.add_argument('--validation_size', default=5000, type=int,
@@ -84,6 +86,9 @@ args = parser.parse_args()
 
 if args.config is not None:
     set_cfg(args.config)
+
+if args.config_file is not None:
+    load_from_file(args.config_file)
 
 if args.dataset is not None:
     set_dataset(args.dataset)

@@ -25,11 +25,11 @@ RUN python3 -m pip install --no-cache-dir torch
 RUN python3 -m pip install --no-cache-dir torchvision
 
 # Доп. либы
-RUN python3 -m pip install --no-cache-dir pandas \
-                                            numpy \
-                                            matplotlib \
-                                            imgaug \
-                                            tqdm
+RUN python3 -m pip install --no-cache-dir pandas 
+RUN python3 -m pip install --no-cache-dir numpy 
+RUN python3 -m pip install --no-cache-dir matplotlib 
+RUN python3 -m pip install --no-cache-dir imgaug 
+RUN python3 -m pip install --no-cache-dir tqdm
 
 WORKDIR /workspace
 

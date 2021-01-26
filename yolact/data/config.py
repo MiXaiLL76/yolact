@@ -28,32 +28,8 @@ COLORS = ((244,  67,  54),
 MEANS = (103.94, 116.78, 123.68)
 STD   = (57.38, 57.12, 58.40)
 
-COCO_CLASSES = ('person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus',
-                'train', 'truck', 'boat', 'traffic light', 'fire hydrant',
-                'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog',
-                'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe',
-                'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee',
-                'skis', 'snowboard', 'sports ball', 'kite', 'baseball bat',
-                'baseball glove', 'skateboard', 'surfboard', 'tennis racket',
-                'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl',
-                'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot',
-                'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch',
-                'potted plant', 'bed', 'dining table', 'toilet', 'tv', 'laptop',
-                'mouse', 'remote', 'keyboard', 'cell phone', 'microwave', 'oven',
-                'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase',
-                'scissors', 'teddy bear', 'hair drier', 'toothbrush')
-
-COCO_LABEL_MAP = { 1:  1,  2:  2,  3:  3,  4:  4,  5:  5,  6:  6,  7:  7,  8:  8,
-                   9:  9, 10: 10, 11: 11, 13: 12, 14: 13, 15: 14, 16: 15, 17: 16,
-                  18: 17, 19: 18, 20: 19, 21: 20, 22: 21, 23: 22, 24: 23, 25: 24,
-                  27: 25, 28: 26, 31: 27, 32: 28, 33: 29, 34: 30, 35: 31, 36: 32,
-                  37: 33, 38: 34, 39: 35, 40: 36, 41: 37, 42: 38, 43: 39, 44: 40,
-                  46: 41, 47: 42, 48: 43, 49: 44, 50: 45, 51: 46, 52: 47, 53: 48,
-                  54: 49, 55: 50, 56: 51, 57: 52, 58: 53, 59: 54, 60: 55, 61: 56,
-                  62: 57, 63: 58, 64: 59, 65: 60, 67: 61, 70: 62, 72: 63, 73: 64,
-                  74: 65, 75: 66, 76: 67, 77: 68, 78: 69, 79: 70, 80: 71, 81: 72,
-                  82: 73, 84: 74, 85: 75, 86: 76, 87: 77, 88: 78, 89: 79, 90: 80}
-
+COCO_CLASSES = ('person', 'bicycle')
+# COCO_CLASSES = { 1:  1,  2:  2}
 
 
 # ----------------------- CONFIG CLASS ----------------------- #
@@ -109,12 +85,12 @@ dataset_base = Config({
     'name': 'Base Dataset',
 
     # Training images and annotations
-    'train_images': './data/coco/images/',
-    'train_info':   'path_to_annotation_file',
+    'train_images': 'dataset/train',
+    'train_info':   'dataset/train/all_coco.json',
 
     # Validation images and annotations.
-    'valid_images': './data/coco/images/',
-    'valid_info':   'path_to_annotation_file',
+    'valid_images': 'dataset/val',
+    'valid_info':   'dataset/val/all_coco.json',
 
     # Whether or not to load GT. If this is False, eval.py quantitative evaluation won't work.
     'has_gt': True,
@@ -127,54 +103,6 @@ dataset_base = Config({
     # If not specified, this just assumes category ids start at 1 and increase sequentially.
     'label_map': None
 })
-
-coco2014_dataset = dataset_base.copy({
-    'name': 'COCO 2014',
-    
-    'train_info': './data/coco/annotations/instances_train2014.json',
-    'valid_info': './data/coco/annotations/instances_val2014.json',
-
-    'label_map': COCO_LABEL_MAP
-})
-
-coco2017_dataset = dataset_base.copy({
-    'name': 'COCO 2017',
-    
-    'train_info': './data/coco/annotations/instances_train2017.json',
-    'valid_info': './data/coco/annotations/instances_val2017.json',
-
-    'label_map': COCO_LABEL_MAP
-})
-
-coco2017_testdev_dataset = dataset_base.copy({
-    'name': 'COCO 2017 Test-Dev',
-
-    'valid_info': './data/coco/annotations/image_info_test-dev2017.json',
-    'has_gt': False,
-
-    'label_map': COCO_LABEL_MAP
-})
-
-PASCAL_CLASSES = ("aeroplane", "bicycle", "bird", "boat", "bottle",
-                  "bus", "car", "cat", "chair", "cow", "diningtable",
-                  "dog", "horse", "motorbike", "person", "pottedplant",
-                  "sheep", "sofa", "train", "tvmonitor")
-
-pascal_sbd_dataset = dataset_base.copy({
-    'name': 'Pascal SBD 2012',
-
-    'train_images': './data/sbd/img',
-    'valid_images': './data/sbd/img',
-    
-    'train_info': './data/sbd/pascal_sbd_train.json',
-    'valid_info': './data/sbd/pascal_sbd_val.json',
-
-    'class_names': PASCAL_CLASSES,
-})
-
-
-
-
 
 # ----------------------- TRANSFORMS ----------------------- #
 
@@ -657,7 +585,7 @@ yolact_base_config = coco_base_config.copy({
     'name': 'yolact_base',
 
     # Dataset stuff
-    'dataset': coco2017_dataset,
+    'dataset': dataset_base,
     'num_classes': len(coco2017_dataset.class_names) + 1,
 
     # Image Size
@@ -703,111 +631,16 @@ yolact_base_config = coco_base_config.copy({
     'use_semantic_segmentation_loss': True,
 })
 
-yolact_im400_config = yolact_base_config.copy({
-    'name': 'yolact_im400',
-
-    'max_size': 400,
-    'backbone': yolact_base_config.backbone.copy({
-        'pred_scales': [[int(x[0] / yolact_base_config.max_size * 400)] for x in yolact_base_config.backbone.pred_scales],
-    }),
-})
-
-yolact_im700_config = yolact_base_config.copy({
-    'name': 'yolact_im700',
-
-    'masks_to_train': 300,
-    'max_size': 700,
-    'backbone': yolact_base_config.backbone.copy({
-        'pred_scales': [[int(x[0] / yolact_base_config.max_size * 700)] for x in yolact_base_config.backbone.pred_scales],
-    }),
-})
-
-yolact_darknet53_config = yolact_base_config.copy({
-    'name': 'yolact_darknet53',
-
-    'backbone': darknet53_backbone.copy({
-        'selected_layers': list(range(2, 5)),
-        
-        'pred_scales': yolact_base_config.backbone.pred_scales,
-        'pred_aspect_ratios': yolact_base_config.backbone.pred_aspect_ratios,
-        'use_pixel_scales': True,
-        'preapply_sqrt': False,
-        'use_square_anchors': True, # This is for backward compatability with a bug
-    }),
-})
-
-yolact_resnet50_config = yolact_base_config.copy({
-    'name': 'yolact_resnet50',
-
-    'backbone': resnet50_backbone.copy({
-        'selected_layers': list(range(1, 4)),
-        
-        'pred_scales': yolact_base_config.backbone.pred_scales,
-        'pred_aspect_ratios': yolact_base_config.backbone.pred_aspect_ratios,
-        'use_pixel_scales': True,
-        'preapply_sqrt': False,
-        'use_square_anchors': True, # This is for backward compatability with a bug
-    }),
-})
-
-
-yolact_resnet50_pascal_config = yolact_resnet50_config.copy({
-    'name': None, # Will default to yolact_resnet50_pascal
-    
-    # Dataset stuff
-    'dataset': pascal_sbd_dataset,
-    'num_classes': len(pascal_sbd_dataset.class_names) + 1,
-
-    'max_iter': 120000,
-    'lr_steps': (60000, 100000),
-    
-    'backbone': yolact_resnet50_config.backbone.copy({
-        'pred_scales': [[32], [64], [128], [256], [512]],
-        'use_square_anchors': False,
-    })
-})
-
-# ----------------------- YOLACT++ CONFIGS ----------------------- #
-
-yolact_plus_base_config = yolact_base_config.copy({
-    'name': 'yolact_plus_base',
-
-    'backbone': resnet101_dcn_inter3_backbone.copy({
-        'selected_layers': list(range(1, 4)),
-        
-        'pred_aspect_ratios': [ [[1, 1/2, 2]] ]*5,
-        'pred_scales': [[i * 2 ** (j / 3.0) for j in range(3)] for i in [24, 48, 96, 192, 384]],
-        'use_pixel_scales': True,
-        'preapply_sqrt': False,
-        'use_square_anchors': False,
-    }),
-
-    'use_maskiou': True,
-    'maskiou_net': [(8, 3, {'stride': 2}), (16, 3, {'stride': 2}), (32, 3, {'stride': 2}), (64, 3, {'stride': 2}), (128, 3, {'stride': 2})],
-    'maskiou_alpha': 25,
-    'rescore_bbox': False,
-    'rescore_mask': True,
-
-    'discard_mask_area': 5*5,
-})
-
-yolact_plus_resnet50_config = yolact_plus_base_config.copy({
-    'name': 'yolact_plus_resnet50',
-
-    'backbone': resnet50_dcnv2_backbone.copy({
-        'selected_layers': list(range(1, 4)),
-        
-        'pred_aspect_ratios': [ [[1, 1/2, 2]] ]*5,
-        'pred_scales': [[i * 2 ** (j / 3.0) for j in range(3)] for i in [24, 48, 96, 192, 384]],
-        'use_pixel_scales': True,
-        'preapply_sqrt': False,
-        'use_square_anchors': False,
-    }),
-})
-
-
 # Default config
 cfg = yolact_base_config.copy()
+
+def load_from_file(config_file_path:str):
+    global cfg
+
+    with open(coco_base_config, encoding='utf-8') as io:
+        new_cfg = json.loads(io.read())
+
+    cfg.update(new_cfg)
 
 def set_cfg(config_name:str):
     """ Sets the active config. Works even if cfg is already imported! """

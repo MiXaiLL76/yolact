@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser(
     description='Yolact Training Script')
 
 parser.add_argument('--dataset', default='dataset', type=str,help='Папка датасета')
-parser.add_argument('--out_file', default='out_coco.json', type=str,help='Папка датасета')
+parser.add_argument('--out_file', default='all_coco.json', type=str,help='Папка датасета')
 
 parser.set_defaults(keep_latest=False, log=True, log_gpu=False, interrupt=True, autoscale=True)
 args = parser.parse_args()
@@ -42,7 +42,7 @@ if __name__ == '__main__':
     }
 
     categories = []
-    for file in get_files(args.dataset, "*.json"):
+    for file in tqdm(get_files(args.dataset, "*.json")):
         with open(file, encoding='utf-8') as io:
             coco = json.loads(io.read())
             
