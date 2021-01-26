@@ -51,7 +51,7 @@ if __name__ == '__main__':
         'name': 'yolact_base',
 
         # Dataset stuff
-        'dataset': Config({
+        'dataset': dict(Config({
             'name': 'Base Dataset',
 
             # Training images and annotations
@@ -72,7 +72,7 @@ if __name__ == '__main__':
             # provide a map from category_id -> index in class_names + 1 (the +1 is there because it's 1-indexed).
             # If not specified, this just assumes category ids start at 1 and increase sequentially.
             'label_map': COCO_LABEL_MAP
-        }),
+        })),
         'num_classes': len(COCO_CLASSES) + 1,
 
         # Image Size
