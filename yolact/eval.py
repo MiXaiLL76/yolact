@@ -24,6 +24,7 @@ from collections import defaultdict
 from pathlib import Path
 from collections import OrderedDict
 from PIL import Image
+from tqdm import tqdm
 
 import matplotlib.pyplot as plt
 import cv2
@@ -619,7 +620,7 @@ def evalimages(net:Yolact, input_folder:str, output_folder:str):
         os.mkdir(output_folder)
 
     print()
-    for p in Path(input_folder).glob('*.png'): 
+    for p in tqdm(Path(input_folder).glob('*.png')): 
         path = str(p)
         name = os.path.basename(path)
         name = '.'.join(name.split('.')[:-1]) + '.png'
@@ -1064,12 +1065,12 @@ if __name__ == '__main__':
     elif args.trained_model == 'latest':
         args.trained_model = SavePath.get_latest('weights/', cfg.name)
 
-    if args.config is None:
-        model_path = SavePath.from_str(args.trained_model)
-        # TODO: Bad practice? Probably want to do a name lookup instead.
-        args.config = model_path.model_name + '_config'
-        print('Config not specified. Parsed %s from the file name.\n' % args.config)
-        set_cfg(args.config)
+    # if args.config is None:
+    #     model_path = SavePath.from_str(args.trained_model)
+    #     # TODO: Bad practice? Probably want to do a name lookup instead.
+    #     args.config = model_path.model_name + '_config'
+    #     print('Config not specified. Parsed %s from the file name.\n' % args.config)
+    #     set_cfg(args.config)
 
     if args.detect:
         cfg.eval_mask_branch = False
