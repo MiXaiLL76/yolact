@@ -648,7 +648,7 @@ cfg = yolact_base_config.copy()
 def load_from_file(config_file_path:str):
     global cfg
 
-    with open(coco_base_config, encoding='utf-8') as io:
+    with open(config_file_path, encoding='utf-8') as io:
         new_cfg = cfg.copy(json.loads(io.read()))
 
     cfg = new_cfg
