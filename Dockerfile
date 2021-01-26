@@ -28,7 +28,8 @@ RUN python3 -m pip install --no-cache-dir torchvision
 RUN python3 -m pip install --no-cache-dir pandas \
                                             numpy \
                                             matplotlib \
-                                            imgaug
+                                            imgaug \
+                                            tqdm
 
 WORKDIR /workspace
 
