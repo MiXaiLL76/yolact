@@ -652,6 +652,7 @@ def load_from_file(config_file_path:str):
         new_cfg = cfg.copy(json.loads(io.read()))
 
     cfg = new_cfg
+    return cfg
 
 def set_cfg(config_name:str):
     """ Sets the active config. Works even if cfg is already imported! """

@@ -41,7 +41,7 @@ RUN python3 -m pip install --no-cache-dir jupyterlab
 
 # jupyterlab работает со старой версией jedi
 RUN python3 -m pip install --no-cache-dir jedi==0.17.2 idna==2.9 
-
+RUN python3 -m pip install --no-cache-dir gdown
 # Настройка файла запуска jupyterlab
 RUN mkdir -m777 -p /app
 ENV JUP_START "/usr/local/bin/jupyter-lab-starter"
