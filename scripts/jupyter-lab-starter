@@ -1,0 +1,15 @@
+#/bin/bash
+
+if [ $# -eq 1 ]; then
+  port=$1
+else
+  port=9999
+fi
+
+echo ''
+echo -e "\e[1m\e[31m[   Jupyter started on]\e[0m http://localhost:${port} \e[0m"
+echo ''
+
+jupyter-lab --no-browser --allow-root --port=${port} --LabApp.notebook_dir='/workspace' --LabApp.password='' --LabApp.password_required=False --LabApp.token='' --LabApp.ip='0.0.0.0'
+chmod 777 -R /workspace 
+chmod 777 -R /data
