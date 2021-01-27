@@ -58,7 +58,7 @@ parser.add_argument('--config', default=None,
                     help='The config object to use.')
 parser.add_argument('--config_file', default=None, type=str,
                     help='config file to load')
-parser.add_argument('--save_interval', default=10000, type=int,
+parser.add_argument('--save_interval', default=3000, type=int,
                     help='The number of iterations between saving the model.')
 parser.add_argument('--validation_size', default=5000, type=int,
                     help='The number of images to use for validation.')
@@ -263,7 +263,7 @@ def train():
     global loss_types # Forms the print order
     loss_avgs  = { k: MovingAverage(100) for k in loss_types }
 
-    print('Begin training!')
+    print(f'Begin training! num_epochs: {num_epochs}')
     print()
     # try-except so you can use ctrl+c to save early and stop training
     try:
